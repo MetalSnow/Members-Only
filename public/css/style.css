@@ -1,0 +1,55 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+
+  & header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 35px 40px;
+    border-bottom: 1px solid rgb(231, 231, 231);
+
+    & h1 {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      & img {
+        width: 40px;
+      }
+    }
+  }
+
+  & footer {
+    padding: 5px 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+
+    & img {
+      width: 15px;
+    }
+
+    & .credits {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2px;
+
+      & a {
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+        color: black;
+        &:hover {
+          color: red;
+        }
+      }
+      & a:hover .github-logo {
+        filter: invert(18%) sepia(100%) saturate(7463%) hue-rotate(-15deg)
+          brightness(104%) contrast(109%);
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Fit Club</title>
+  </head>
+  <body>
+    <%- include('partials/header') %>
+    <div>
+      <h2>JOIN THE CLUB NOW!</h2>
+      <%if(locals.message){%>
+      <p><%= message %></p>
+      <% } %>
+      <form action="/membership" method="post">
+        <label for="passcode">Secret passcode</label>
+        <input
+          type="text"
+          id="passcode"
+          name="passcode"
+          placeholder="Enter secret code"
+        />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+    <%- include('partials/footer') %>
+  </body>
+</html>
