@@ -2,7 +2,17 @@
   <h1>Fit Club</h1>
 
   <ul>
+    <% if(locals.currentUser){%>
+    <li>
+      <img src="icons/user.svg" alt="user-icon" /><span
+        ><%= currentUser.first_name %></span
+      >
+    </li>
     <li><a href="/membership">Join Club</a></li>
+    <li><a href="/log-out">Log Out</a></li>
+    <% } else{ %>
+    <li><a href="/log-in">Log in</a></li>
+    <% } %>
     <li><a href="#">About</a></li>
   </ul>
 </header>

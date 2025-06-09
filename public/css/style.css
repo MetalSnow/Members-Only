@@ -19,6 +19,10 @@ body {
         width: 40px;
       }
     }
+
+    & img {
+      width: 15px;
+    }
   }
 
   & footer {

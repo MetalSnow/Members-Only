@@ -13,4 +13,22 @@ const assignMembership = asyncHandler(async (id) => {
     id,
   ]);
 });
-module.exports = { insertUser, assignMembership };
+
+const findUserByEmail = asyncHandler(async (email) => {
+  const { rows } = await pool.query('SELECT * FROM users WHERE email = $1', [
+    email,
+  ]);
+  return rows[0];
+});
+
+const findUserById = asyncHandler(async (id) => {
+  const { rows } = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
+  return rows[0];
+});
+
+module.exports = {
+  insertUser,
+  assignMembership,
+  findUserByEmail,
+  findUserById,
+};

@@ -1,7 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
-const { insertUser } = require('../db/userQueries');
+const { insertUser, findUserByEmail } = require('../db/userQueries');
 
 const alphaErr = 'must only contain letters.';
 const lengthErr = 'must be minimum 3 characters.';
@@ -21,7 +21,14 @@ const validateUser = [
     .isLength({ min: 2 })
     .withMessage(`Last name ${lengthErr}`),
   ,
-  body('email').trim().isEmail().withMessage('Please enter a valid email.'),
+  body('email')
+    .trim()
+    .custom(async (value) => {
+      const user = await findUserByEmail(value);
+      if (user) throw new Error('E-mail already in use.');
+    })
+    .isEmail()
+    .withMessage('Please enter a valid email.'),
   body('password')
     .isLength({ min: 5 })
     .withMessage('Password must be minimum 5 characters.'),
@@ -34,6 +41,10 @@ const validateUser = [
 
 const getSignUpPage = asyncHandler((req, res) => {
   res.render('sign-up');
+});
+
+const getLogInPage = asyncHandler((req, res) => {
+  res.render('log-in');
 });
 
 const createUser = [
@@ -55,4 +66,11 @@ const createUser = [
   }),
 ];
 
-module.exports = { getSignUpPage, createUser };
+const logoutUser = (req, res, next) => {
+  req.logout((err) => {
+    if (err) return next(err);
+  });
+  res.redirect('/');
+};
+
+module.exports = { getSignUpPage, createUser, getLogInPage, logoutUser };
