@@ -15,6 +15,7 @@
     </div>
     <%}else{ %>
     <h2>Welcome <%= currentUser.first_name %> <%= currentUser.last_name %></h2>
+    <a href="/new-message">Create new message</a>
     <% } %> <%- include('partials/footer.ejs') %>
   </body>
 </html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Fit Club</title>
+  </head>
+  <body>
+    <%- include('partials/header.ejs') %>
+    <h2>New Message</h2>
+    <%- include('partials/errors.ejs') %>
+    <form method="post" action="/new-message">
+      <textarea
+        name="message"
+        id="message"
+        rows="4"
+        cols="50"
+        placeholder="Write your message.."
+      ></textarea>
+      <button type="submit">Publish ᯓ➤</button>
+    </form>
+    <%- include('partials/footer.ejs') %>
+  </body>
+</html>

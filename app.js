@@ -6,6 +6,7 @@ const passport = require('./config/passport');
 const session = require('express-session');
 const authContext = require('./middleware/authContext');
 const errorHandler = require('./middleware/errorHandler');
+const msgRouter = require('./routes/msgRouter');
 require('dotenv').config();
 
 const app = express();
@@ -39,6 +40,7 @@ app.use(authContext);
 
 app.use(indexRouter);
 app.use(authRouter);
+app.use(msgRouter);
 
 app.use(errorHandler);
 

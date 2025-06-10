@@ -10,7 +10,9 @@
     <%- include('partials/header') %>
     <div>
       <h2>JOIN THE CLUB NOW!</h2>
-      <%if(locals.message){%>
+      <% if(locals.currentUser?.membership_status){ %>
+      <p>You are already a member of the club!</p>
+      <% } else{%> <%if(locals.message){%>
       <p><%= message %></p>
       <% } %>
       <form action="/membership" method="post">
@@ -23,6 +25,7 @@
         />
         <button type="submit">Submit</button>
       </form>
+      <% } %>
     </div>
     <%- include('partials/footer') %>
   </body>
