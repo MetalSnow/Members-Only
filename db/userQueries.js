@@ -1,5 +1,4 @@
 const pool = require('./pool');
-const asyncHandler = require('express-async-handler');
 
 const insertUser = async (user, password) => {
   await pool.query(

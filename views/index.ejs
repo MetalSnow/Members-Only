@@ -14,8 +14,13 @@
       <a href="/log-in">Log in</a>
     </div>
     <%}else{ %>
-    <h2>Welcome <%= currentUser.first_name %> <%= currentUser.last_name %></h2>
-    <a href="/new-message">Create new message</a>
+    <div>
+      <h2>
+        Welcome <%= currentUser.first_name %> <%= currentUser.last_name %>
+      </h2>
+      <a href="/new-message">Create new message</a>
+    </div>
+    <div class="posts"></div>
     <% } %> <%- include('partials/footer.ejs') %>
   </body>
 </html>

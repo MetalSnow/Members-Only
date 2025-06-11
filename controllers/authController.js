@@ -62,7 +62,7 @@ const createUser = [
     const hashedPassword = await bcrypt.hash(user.password, 10);
 
     await insertUser(user, hashedPassword);
-    res.send('User signed up successfuly!');
+    res.redirect('/');
   }),
 ];
 

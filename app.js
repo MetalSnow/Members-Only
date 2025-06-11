@@ -7,6 +7,7 @@ const session = require('express-session');
 const authContext = require('./middleware/authContext');
 const errorHandler = require('./middleware/errorHandler');
 const msgRouter = require('./routes/msgRouter');
+const flash = require('connect-flash');
 require('dotenv').config();
 
 const app = express();
@@ -19,6 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
+
+app.use(flash());
 
 app.use(
   session({
@@ -33,6 +36,8 @@ app.use(
     },
   })
 );
+
+app.use(flash());
 
 app.use(passport.session());
 
