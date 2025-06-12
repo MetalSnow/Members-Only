@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS users (
     last_name VARCHAR( 255 ),
     email VARCHAR( 255 ),
     password VARCHAR( 255 ),
-    membership_status BOOLEAN
+    membership_status BOOLEAN,
+    admin BOOLEAN
 );
 
 CREATE TABLE IF NOT EXISTS content (

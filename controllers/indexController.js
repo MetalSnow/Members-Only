@@ -1,13 +1,24 @@
 const asyncHandler = require('express-async-handler');
-const { assignMembership } = require('../db/userQueries');
+const {
+  assignMembership,
+  assignAdmin,
+  getAllAdmins,
+} = require('../db/userQueries');
+const { getAllMessages } = require('../db/messageQueries');
 require('dotenv').config();
 
-const getIndexPage = asyncHandler((req, res) => {
-  res.render('index');
+const getIndexPage = asyncHandler(async (req, res) => {
+  const messages = await getAllMessages();
+  res.render('index', { messages: messages });
 });
 
 const getMembershipPage = asyncHandler((req, res) => {
   res.render('membership');
+});
+
+const getAdminPage = asyncHandler(async (req, res) => {
+  const admins = await getAllAdmins();
+  res.render('admin', { admins: admins });
 });
 
 const grantMembership = asyncHandler(async (req, res) => {
@@ -23,4 +34,23 @@ const grantMembership = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = { getIndexPage, getMembershipPage, grantMembership };
+const grantAdmin = asyncHandler(async (req, res) => {
+  const userSecret = req.body.passcode;
+
+  if (process.env.ADMIN_PASSCODE === userSecret) {
+    await assignAdmin(req.user.id);
+    return res.render('admin', { message: 'Admin granted ✅' });
+  }
+
+  res.render('admin', {
+    message: '❌ Incorrect passcode. Please try again.',
+  });
+});
+
+module.exports = {
+  getIndexPage,
+  getMembershipPage,
+  grantMembership,
+  getAdminPage,
+  grantAdmin,
+};

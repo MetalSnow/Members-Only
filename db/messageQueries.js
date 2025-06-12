@@ -7,4 +7,12 @@ const insertMessage = async (userId, title, msg) => {
   );
 };
 
-module.exports = { insertMessage };
+const getAllMessages = async () => {
+  const { rows } =
+    await pool.query(`SELECT content.id AS "msgID", first_name, last_name, title, timestamp, text
+                            FROM content JOIN users ON content.user_id = users.id 
+                            ORDER BY timestamp DESC`);
+  return rows;
+};
+
+module.exports = { insertMessage, getAllMessages };

@@ -20,7 +20,31 @@
       </h2>
       <a href="/new-message">Create new message</a>
     </div>
-    <div class="posts"></div>
+    <% } %>
+    <div class="msgContainer">
+      <% messages.forEach((msg) => {%> <% const date =
+      msg.timestamp.toString().slice(4,15); const time =
+      msg.timestamp.toString().slice(16,21); const zoneStart =
+      msg.timestamp.toString().split('').indexOf('('); const zone =
+      msg.timestamp.toString().slice(zoneStart); %>
+      <div class="messages">
+        <% if(currentUser?.membership_status){ %>
+        <p class="author"><%= msg.first_name %> <%= msg.last_name %></p>
+        <p class="timestamp"><%= date %> - <%= time %> <%= zone %></p>
+        <% }else{%>
+        <p class="author">👤Anonymous member</p>
+        <p class="timestamp">⏳Time hidden</p>
+        <% } %>
+        <p class="title"><%= msg.title%></p>
+        <p class="message"><%= msg.text %></p>
+      </div>
+      <% }); %>
+    </div>
+    <% if(!currentUser?.membership_status){ %>
+    <div>
+      <p>Want to see the author and time?</p>
+      <a href="/membership">Join the club now!</a>
+    </div>
     <% } %> <%- include('partials/footer.ejs') %>
   </body>
 </html>
