@@ -6,14 +6,15 @@ const {
   grantAdmin,
   getAdminPage,
 } = require('../controllers/indexController');
+const { isAuth } = require('../middleware/authMiddleware');
 
 const indexRouter = Router();
 
 indexRouter.get('/', getIndexPage);
-indexRouter.get('/membership', getMembershipPage);
-indexRouter.post('/membership', grantMembership);
+indexRouter.get('/membership', isAuth, getMembershipPage);
+indexRouter.post('/membership', isAuth, grantMembership);
 
-indexRouter.get('/admin', getAdminPage);
-indexRouter.post('/admin', grantAdmin);
+indexRouter.get('/admin', isAuth, getAdminPage);
+indexRouter.post('/admin', isAuth, grantAdmin);
 
 module.exports = indexRouter;
