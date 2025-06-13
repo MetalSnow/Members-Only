@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const { insertMessage } = require('../db/messageQueries');
+const { insertMessage, removeMessage } = require('../db/messageQueries');
 
 const getMsgForm = asyncHandler((req, res) => {
   res.render('new-message');
@@ -14,4 +14,12 @@ const createMessage = asyncHandler(async (req, res) => {
   res.redirect('/');
 });
 
-module.exports = { getMsgForm, createMessage };
+const deleteMessage = asyncHandler(async (req, res) => {
+  const { msgId } = req.body;
+
+  await removeMessage(msgId);
+
+  res.redirect('/');
+});
+
+module.exports = { getMsgForm, createMessage, deleteMessage };

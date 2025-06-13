@@ -28,7 +28,7 @@
       msg.timestamp.toString().split('').indexOf('('); const zone =
       msg.timestamp.toString().slice(zoneStart); %>
       <div class="messages">
-        <% if(currentUser?.membership_status){ %>
+        <% if(currentUser?.membership_status || currentUser?.admin){ %>
         <p class="author"><%= msg.first_name %> <%= msg.last_name %></p>
         <p class="timestamp"><%= date %> - <%= time %> <%= zone %></p>
         <% }else{%>
@@ -37,6 +37,12 @@
         <% } %>
         <p class="title"><%= msg.title%></p>
         <p class="message"><%= msg.text %></p>
+        <% if(currentUser?.admin){ %>
+        <form action="/deleteMsg" method="post" id="deleteMsgForm">
+          <input type="hidden" name="msgId" value="<%= msg.id %>" />
+          <button><img src="icons/trash-icon.png" alt="delete-icon" /></button>
+        </form>
+        <% } %>
       </div>
       <% }); %>
     </div>

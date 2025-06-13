@@ -9,10 +9,14 @@ const insertMessage = async (userId, title, msg) => {
 
 const getAllMessages = async () => {
   const { rows } =
-    await pool.query(`SELECT content.id AS "msgID", first_name, last_name, title, timestamp, text
+    await pool.query(`SELECT content.id, first_name, last_name, title, timestamp, text
                             FROM content JOIN users ON content.user_id = users.id 
                             ORDER BY timestamp DESC`);
   return rows;
 };
 
-module.exports = { insertMessage, getAllMessages };
+const removeMessage = async (id) => {
+  await pool.query('DELETE FROM content WHERE id = $1', [id]);
+};
+
+module.exports = { insertMessage, getAllMessages, removeMessage };
