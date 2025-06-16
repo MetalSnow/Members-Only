@@ -7,50 +7,65 @@
     <title>Fit Club</title>
   </head>
   <body>
-    <%- include('partials/header.ejs') %> <% if(!locals.currentUser) {%>
-    <a href="/sign-up">Sign up</a>
-    <div>
-      <p>Already have an account?</p>
-      <a href="/log-in">Log in</a>
-    </div>
-    <%}else{ %>
-    <div>
-      <h2>
-        Welcome <%= currentUser.first_name %> <%= currentUser.last_name %>
-      </h2>
-      <a href="/new-message">Create new message</a>
-    </div>
-    <% } %>
-    <div class="msgContainer">
-      <% messages.forEach((msg) => {%> <% const date =
-      msg.timestamp.toString().slice(4,15); const time =
-      msg.timestamp.toString().slice(16,21); const zoneStart =
-      msg.timestamp.toString().split('').indexOf('('); const zone =
-      msg.timestamp.toString().slice(zoneStart); %>
-      <div class="messages">
-        <% if(currentUser?.membership_status || currentUser?.admin){ %>
-        <p class="author"><%= msg.first_name %> <%= msg.last_name %></p>
-        <p class="timestamp"><%= date %> - <%= time %> <%= zone %></p>
-        <% }else{%>
-        <p class="author">👤Anonymous member</p>
-        <p class="timestamp">⏳Time hidden</p>
-        <% } %>
-        <p class="title"><%= msg.title%></p>
-        <p class="message"><%= msg.text %></p>
-        <% if(currentUser?.admin){ %>
-        <form action="/deleteMsg" method="post" id="deleteMsgForm">
-          <input type="hidden" name="msgId" value="<%= msg.id %>" />
-          <button><img src="icons/trash-icon.png" alt="delete-icon" /></button>
-        </form>
+    <%- include('partials/header.ejs') %>
+    <main class="homepageContainer">
+      <% if(!locals.currentUser) {%>
+      <div class="sign-up-in">
+        <a href="/sign-up">Create new account</a>
+        <p>Already have an account?</p>
+        <a href="/log-in">Log in</a>
+      </div>
+      <%}else{ %>
+      <div class="welcome">
+        <h2>
+          Welcome User
+          <span
+            ><%= currentUser.first_name %> <%= currentUser.last_name %></span
+          >
+        </h2>
+        <a href="/new-message">Create new message</a>
+      </div>
+      <% } %>
+      <div class="msgContainer">
+        <% messages.forEach((msg) => {%> <% const date =
+        msg.timestamp.toString().slice(4,15); const time =
+        msg.timestamp.toString().slice(16,21); const zoneStart =
+        msg.timestamp.toString().split('').indexOf('('); const zone =
+        msg.timestamp.toString().slice(zoneStart); %>
+        <div class="messages">
+          <% if(currentUser?.membership_status || currentUser?.admin){ %>
+          <p class="author">
+            <img src="icons/profile.png" alt="user-picture" />
+            <span> <%= msg.first_name %> <%= msg.last_name %> </span>
+          </p>
+          <p class="timestamp"><%= date %> - <%= time %> <%= zone %></p>
+          <% }else{%>
+          <p class="author">👤Anonymous member</p>
+          <p class="timestamp">⏳Time hidden</p>
+          <% } %>
+          <p class="title"><%= msg.title%></p>
+          <p class="message"><%= msg.text %></p>
+          <% if(currentUser?.admin){ %>
+          <form action="/deleteMsg" method="post" id="deleteMsgForm">
+            <input type="hidden" name="msgId" value="<%= msg.id %>" />
+            <button type="submit">
+              <img src="icons/trash-icon.png" alt="delete-icon" />
+            </button>
+          </form>
+          <% } %>
+        </div>
+        <% }); %>
+      </div>
+      <div class="membership-link">
+        <% if(!currentUser?.membership_status){ %>
+        <p>Want to see the author and time?</p>
+        <a href="/membership">Join the club now!</a>
+        <% } else{ %>
+        <p>Want to see the author and time?</p>
+        <a href="/membership">Membership Status</a>
         <% } %>
       </div>
-      <% }); %>
-    </div>
-    <% if(!currentUser?.membership_status){ %>
-    <div>
-      <p>Want to see the author and time?</p>
-      <a href="/membership">Join the club now!</a>
-    </div>
-    <% } %> <%- include('partials/footer.ejs') %>
+    </main>
+    <%- include('partials/footer.ejs') %>
   </body>
 </html>
