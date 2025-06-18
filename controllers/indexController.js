@@ -44,7 +44,7 @@ const grantAdmin = asyncHandler(async (req, res) => {
 
   if (process.env.ADMIN_PASSCODE === userSecret) {
     await assignAdmin(req.user.id);
-    return res.render('admin', { message: 'Admin granted ✅' });
+    return res.render('admin', { message: 'Admin granted ✅', admins: admins });
   }
 
   res.render('admin', {
