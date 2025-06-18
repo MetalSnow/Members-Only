@@ -8,34 +8,36 @@
   </head>
   <body>
     <%- include('partials/header') %>
-    <div>
-      <h2>Become an admin</h2>
-      <% if(locals.currentUser?.admin){ %>
-      <p>You are already an admin!</p>
-      <% } else{%> <%if(locals.message){%>
-      <p><%= message %></p>
+    <main class="admin-container">
+      <div class="admin-pass">
+        <h2>Become an admin</h2>
+        <% if(locals.currentUser?.admin){ %>
+        <p>You are already an admin!</p>
+        <% } else{%> <%if(locals.message){%>
+        <p><%= message %></p>
+        <% } %>
+        <form action="/admin" method="post">
+          <input
+            type="text"
+            id="passcode"
+            name="passcode"
+            placeholder="Enter admin passcode"
+          />
+          <button type="submit">Submit</button>
+        </form>
+        <% } %>
+      </div>
+      <% if(locals.admins){%>
+      <div class="admins-list">
+        <h2>Admin List</h2>
+        <ul>
+          <% admins.forEach((admin) => {%>
+          <li><%= admin.first_name %> <%= admin.last_name %></li>
+          <% }); %>
+        </ul>
+      </div>
       <% } %>
-      <form action="/admin" method="post">
-        <label for="passcode">Admin passcode:</label>
-        <input
-          type="text"
-          id="passcode"
-          name="passcode"
-          placeholder="Enter admin code"
-        />
-        <button type="submit">Submit</button>
-      </form>
-      <% } %>
-    </div>
-    <% if(locals.admins){%>
-    <div class="admins">
-      <h2>Admin List:</h2>
-      <ul>
-        <% admins.forEach((admin) => {%>
-        <li><%= admin.first_name %> <%= admin.last_name %></li>
-        <% }); %>
-      </ul>
-    </div>
-    <% } %> <%- include('partials/footer') %>
+    </main>
+    <%- include('partials/footer') %>
   </body>
 </html>

@@ -21,6 +21,10 @@ const getAdminPage = asyncHandler(async (req, res) => {
   res.render('admin', { admins: admins });
 });
 
+const getAboutPage = asyncHandler((req, res) => {
+  res.render('about');
+});
+
 const grantMembership = asyncHandler(async (req, res) => {
   const userSecret = req.body.passcode;
 
@@ -36,6 +40,7 @@ const grantMembership = asyncHandler(async (req, res) => {
 
 const grantAdmin = asyncHandler(async (req, res) => {
   const userSecret = req.body.passcode;
+  const admins = await getAllAdmins();
 
   if (process.env.ADMIN_PASSCODE === userSecret) {
     await assignAdmin(req.user.id);
@@ -44,6 +49,7 @@ const grantAdmin = asyncHandler(async (req, res) => {
 
   res.render('admin', {
     message: '❌ Incorrect passcode. Please try again.',
+    admins: admins,
   });
 });
 
@@ -53,4 +59,5 @@ module.exports = {
   grantMembership,
   getAdminPage,
   grantAdmin,
+  getAboutPage,
 };

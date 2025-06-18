@@ -4,20 +4,24 @@
       ><img src="icons/running.png" alt="fit-logo" /> <span>Fit Club</span></a
     >
   </h1>
+  <a href="/"></a>
 
   <ul>
     <% if(locals.currentUser){%>
-    <li class="profile">
-      <img src="icons/user.svg" alt="user-icon" /><span
-        ><%= currentUser.first_name %></span
-      >
-    </li>
+    <a href="/">
+      <li class="profile">
+        <img src="icons/user.svg" alt="user-icon" /><span
+          ><%= currentUser.first_name %></span
+        >
+      </li>
+    </a>
     <li><a href="/membership">🌟 Join Club</a></li>
     <li><a href="/admin">🔐 Admin Portal</a></li>
     <li><a href="/log-out">⬅️ Log Out</a></li>
     <% } else{ %>
+    <li><a href="/">🏠︎ Home</a></li>
     <li><a href="/log-in">🔑 Log in</a></li>
     <% } %>
-    <li><a href="#">📖 About</a></li>
+    <li><a href="/about">📖 About</a></li>
   </ul>
 </header>
