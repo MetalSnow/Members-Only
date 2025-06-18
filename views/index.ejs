@@ -57,7 +57,14 @@
         <% }); %>
       </div>
       <div class="membership-link">
-        <% if(!currentUser?.membership_status){ %>
+        <% if(!currentUser){ %>
+        <p>Want to see the author and time?</p>
+        <a
+          href="/membership"
+          style="pointer-events: none; cursor: default; color: gray"
+          >Join the club now!</a
+        >
+        <% } else if(!currentUser?.membership_status){ %>
         <p>Want to see the author and time?</p>
         <a href="/membership">Join the club now!</a>
         <% } else{ %>

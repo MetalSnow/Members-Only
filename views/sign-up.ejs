@@ -8,54 +8,56 @@
   </head>
   <body>
     <%- include('partials/header.ejs') %>
-    <h2>Sign Up</h2>
-    <%- include('partials/validationErrors.ejs') %>
-    <form method="post" action="/sign-up">
-      <label for="first-name">First Name:</label>
-      <input
-        type="text"
-        id="first-name"
-        name="firstName"
-        placeholder="First name"
-        required
-        value="<%= locals.userInfo?.firstName %>"
-      />
-      <label for="last-name">Last Name:</label>
-      <input
-        type="text"
-        id="last-name"
-        name="lastName"
-        placeholder="Last name"
-        required
-        value="<%= locals.userInfo?.lastName %>"
-      />
-      <label for="email">Email:</label>
-      <input
-        type="text"
-        id="email"
-        name="email"
-        placeholder="e.g(abc@ef.com)"
-        required
-        value="<%= locals.userInfo?.email %>"
-      />
-      <label for="password">Password:</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        placeholder="Password"
-        required
-      />
-      <label for="confirmPassword">Confirm Password :</label>
-      <input
-        type="password"
-        id="confirmPassword "
-        name="confirmedPassword"
-        placeholder="Confirm Password"
-        required
-      />
-      <button type="submit">Register</button>
-    </form>
+    <main class="signup-container">
+      <h2>Sign Up</h2>
+      <%- include('partials/validationErrors.ejs') %>
+      <form method="post" action="/sign-up" class="sign-up-form">
+        <label for="first-name">First Name:</label>
+        <input
+          type="text"
+          id="first-name"
+          name="firstName"
+          placeholder="First name"
+          required
+          value="<%= locals.userInfo?.firstName %>"
+        />
+        <label for="last-name">Last Name:</label>
+        <input
+          type="text"
+          id="last-name"
+          name="lastName"
+          placeholder="Last name"
+          required
+          value="<%= locals.userInfo?.lastName %>"
+        />
+        <label for="email">Email:</label>
+        <input
+          type="text"
+          id="email"
+          name="email"
+          placeholder="e.g(abc@ef.com)"
+          required
+          value="<%= locals.userInfo?.email %>"
+        />
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+        <label for="confirmPassword">Confirm Password :</label>
+        <input
+          type="password"
+          id="confirmPassword "
+          name="confirmedPassword"
+          placeholder="Confirm Password"
+          required
+        />
+        <button type="submit">Register</button>
+      </form>
+    </main>
     <%- include('partials/footer.ejs') %>
   </body>
 </html>
