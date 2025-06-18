@@ -9,3 +9,12 @@ An exclusive fitness community where members can share anonymous posts, funny gy
 - **Admin Privileges** (Message deletion powers)
 - **Anonymous Posting** (Public sees content only)
 - **Responsive UI** (Styled message/pass pages)
+
+## Technologies
+
+**Core Stack:**
+
+- **Backend**: Node.js + Express
+- **Database**: PostgreSQL
+- **Auth**: Passport.js + bcryptjs
+- **Frontend**: EJS templates + CSS
