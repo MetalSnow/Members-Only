@@ -1,9 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const {
-  assignMembership,
-  assignAdmin,
-  getAllAdmins,
-} = require('../db/userQueries');
+const { userService } = require('../db/userQueries');
 const { getAllMessages } = require('../db/messageQueries');
 require('dotenv').config();
 
@@ -17,7 +13,7 @@ const getMembershipPage = asyncHandler((req, res) => {
 });
 
 const getAdminPage = asyncHandler(async (req, res) => {
-  const admins = await getAllAdmins();
+  const admins = await userService.getAllAdmins();
   res.render('admin', { admins: admins });
 });
 
@@ -29,7 +25,7 @@ const grantMembership = asyncHandler(async (req, res) => {
   const userSecret = req.body.passcode;
 
   if (process.env.MEMBERSHIP_PASSCODE === userSecret) {
-    await assignMembership(req.user.id);
+    await userService.assignMembership(req.user.id);
     return res.render('membership', { message: 'Membership granted ✅' });
   }
 
@@ -40,10 +36,10 @@ const grantMembership = asyncHandler(async (req, res) => {
 
 const grantAdmin = asyncHandler(async (req, res) => {
   const userSecret = req.body.passcode;
-  const admins = await getAllAdmins();
+  const admins = await userService.getAllAdmins();
 
   if (process.env.ADMIN_PASSCODE === userSecret) {
-    await assignAdmin(req.user.id);
+    await userService.assignAdmin(req.user.id);
     return res.render('admin', { message: 'Admin granted ✅', admins: admins });
   }
 

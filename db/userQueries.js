@@ -1,46 +1,31 @@
-const pool = require('./pool');
+const Database = require('./orm');
 
-const insertUser = async (user, password) => {
-  await pool.query(
-    'INSERT INTO users (first_name, last_name, email, password, membership_status, admin) VALUES ($1, $2, $3, $4, $5, $6)',
-    [user.firstName, user.lastName, user.email, password, false, false]
-  );
-};
+class User extends Database {
+  async insertUser(data) {
+    await this.insert('users', data);
+  }
+  async assignMembership(id) {
+    await this.update('users', 'membership_status', true, { id: id });
+  }
+  async findUserByEmail(email) {
+    const rows = await this.select('users', '*', { email: email });
+    return rows[0];
+  }
+  async findUserById(id) {
+    const rows = await this.select('users', '*', { id: id });
+    return rows[0];
+  }
+  async assignAdmin(id) {
+    await this.update('users', 'admin', true, { id: id });
+  }
+  async getAllAdmins() {
+    const rows = await this.select('users', '*', { admin: true });
+    return rows;
+  }
+}
 
-const assignMembership = async (id) => {
-  await pool.query('UPDATE users SET membership_status = true WHERE id = $1', [
-    id,
-  ]);
-};
-
-const findUserByEmail = async (email) => {
-  const { rows } = await pool.query('SELECT * FROM users WHERE email = $1', [
-    email,
-  ]);
-  return rows[0];
-};
-
-const findUserById = async (id) => {
-  const { rows } = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
-  return rows[0];
-};
-
-const assignAdmin = async (id) => {
-  await pool.query('UPDATE users SET admin = true WHERE id = $1', [id]);
-};
-
-const getAllAdmins = async () => {
-  const { rows } = await pool.query(
-    'SELECT first_name, last_name FROM users WHERE admin = true'
-  );
-  return rows;
-};
+const userService = new User();
 
 module.exports = {
-  insertUser,
-  assignMembership,
-  findUserByEmail,
-  findUserById,
-  assignAdmin,
-  getAllAdmins,
+  userService,
 };

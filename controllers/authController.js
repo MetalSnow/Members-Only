@@ -1,7 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
-const { insertUser, findUserByEmail } = require('../db/userQueries');
+const { userService } = require('../db/userQueries');
 
 const alphaErr = 'must only contain letters.';
 const lengthErr = 'must be minimum 3 characters.';
@@ -24,7 +24,7 @@ const validateUser = [
   body('email')
     .trim()
     .custom(async (value) => {
-      const user = await findUserByEmail(value);
+      const user = await userService.findUserByEmail(value);
       if (user) throw new Error('E-mail already in use.');
     })
     .isEmail()
@@ -61,7 +61,7 @@ const createUser = [
     const user = req.body;
     const hashedPassword = await bcrypt.hash(user.password, 10);
 
-    await insertUser(user, hashedPassword);
+    await userService.insertUser(user, hashedPassword);
     res.redirect('/log-in');
   }),
 ];
